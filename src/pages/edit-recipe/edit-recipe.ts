@@ -26,4 +26,8 @@ export class EditRecipePage {
     console.log(this.recipeForm);
     
   }
+
+  onManageIngredients(){
+    
+  }
 }
