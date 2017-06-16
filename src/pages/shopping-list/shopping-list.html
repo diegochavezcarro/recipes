@@ -14,16 +14,17 @@
       <ion-label fixed>Name</ion-label>
       <!--en template forms se necesita el name -->
       <ion-input type="text" name="ingredientName" 
-         placeholder="Milk" ngModel></ion-input>
+         placeholder="Milk" ngModel required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Amount</ion-label>
       <!--en template forms se necesita el name -->
       <ion-input type="number" name="amount" 
-          placeholder="2" ngModel></ion-input>
+          placeholder="2" ngModel required></ion-input>
     </ion-item>
   </ion-list>
   <button ion-button
-      type="submit" block>Add Item</button>
+      type="submit" block
+      [disabled]="!f.valid">Add Item</button>
 </form>
 </ion-content>
