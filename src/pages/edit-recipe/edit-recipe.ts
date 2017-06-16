@@ -13,6 +13,7 @@ export class EditRecipePage {
   constructor(private navParams:NavParams){}
   ngOnInit(){
     this.navParams.get('mode');
+    this.initializeForm();
   }
   private initializeForm(){
     this.recipeForm = new FormGroup({
@@ -20,5 +21,9 @@ export class EditRecipePage {
       'description': new FormControl(null, Validators.required),
       'difficulty': new FormControl('Medium', Validators.required)
     });
+  }
+  onSubmit(){
+    console.log(this.recipeForm);
+    
   }
 }
