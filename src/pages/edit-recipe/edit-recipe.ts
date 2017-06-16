@@ -1,3 +1,4 @@
+import { NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,5 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: 'edit-recipe.html',
 })
 export class EditRecipePage {
-
+  mode='New';
+  selectOptions = ['Easy','Medium','Hard'];
+  constructor(private navParams:NavParams){}
+  ngOnInit(){
+    this.navParams.get('mode');
+  }
 }
