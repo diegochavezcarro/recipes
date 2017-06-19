@@ -7,17 +7,17 @@ import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
   templateUrl: 'edit-recipe.html',
 })
 export class EditRecipePage {
-  mode='New';
-  selectOptions = ['Easy','Medium','Hard'];
-  recipeForm : FormGroup;
-  constructor(private navParams:NavParams,
-      private actionSheetController: ActionSheetController,
-      private alertCtrl: AlertController){}
-  ngOnInit(){
+  mode = 'New';
+  selectOptions = ['Easy', 'Medium', 'Hard'];
+  recipeForm: FormGroup;
+  constructor(private navParams: NavParams,
+    private actionSheetController: ActionSheetController,
+    private alertCtrl: AlertController) { }
+  ngOnInit() {
     this.navParams.get('mode');
     this.initializeForm();
   }
-  private initializeForm(){
+  private initializeForm() {
     this.recipeForm = new FormGroup({
       'title': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
@@ -25,44 +25,47 @@ export class EditRecipePage {
       'ingredients': new FormArray([])
     });
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.recipeForm);
   }
 
-  private createNewIngredientAlert(){
-        const newIngredientAlert = this.alertCtrl.create({
-          title: 'Add Ingredient',
-          inputs: [
-            {
-              name: 'name',
-              placeholder: 'Name'
+  private createNewIngredientAlert() {
+    return this.alertCtrl.create({
+      title: 'Add Ingredient',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Add',
+          handler: data => {
+            if (data.name.trim() == '' || data.name == null) {
+              return;
             }
-          ],
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel'
-            },
-            {
-              text: 'Add',
-              handler: data => {
-                if(data.name.trim() == '' || data.name==null)
-                console.log();
-                
-              }            
-            }
-          ]
+            (<FormArray>this.recipeForm.get('ingredients'))
+                .push(new FormControl(data.name, Validators.required));
+          }
+
+        }
+      ]
     });
   }
 
-  onManageIngredients(){
+  onManageIngredients() {
     const actionSheet = this.actionSheetController.create({
       title: 'What do you want to do?',
       buttons: [
         {
           text: 'Add Ingredient',
           handler: () => {
-
+            this.createNewIngredientAlert().present();
           }
         },
         {
@@ -78,5 +81,6 @@ export class EditRecipePage {
         }
       ]
     });
+    actionSheet.present();
   }
 }
