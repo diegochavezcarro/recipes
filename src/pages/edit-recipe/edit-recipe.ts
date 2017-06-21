@@ -1,4 +1,5 @@
-import { NavParams, ActionSheetController, AlertController } from 'ionic-angular';
+import { NavParams, ActionSheetController, 
+    AlertController,ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 
@@ -12,7 +13,8 @@ export class EditRecipePage {
   recipeForm: FormGroup;
   constructor(private navParams: NavParams,
     private actionSheetController: ActionSheetController,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController) { }
   ngOnInit() {
     this.navParams.get('mode');
     this.initializeForm();
@@ -47,10 +49,22 @@ export class EditRecipePage {
           text: 'Add',
           handler: data => {
             if (data.name.trim() == '' || data.name == null) {
+              const toast = this.toastCtrl.create({
+                message: 'Please enter a valid value!',
+                duration: 2000,
+                position: 'bottom'
+              });
+              toast.present();
               return;
             }
             (<FormArray>this.recipeForm.get('ingredients'))
               .push(new FormControl(data.name, Validators.required));
+                const toast = this.toastCtrl.create({
+                message: 'Item Added!',
+                duration: 2000,
+                position: 'bottom'
+              });
+              toast.present();
           }
 
         }
@@ -79,6 +93,12 @@ export class EditRecipePage {
                 fArray.removeAt(i);
                 
               }
+              const toast = this.toastCtrl.create({
+                message: 'All ingredients were deleted!',
+                duration: 2000,
+                position: 'bottom'
+              });
+              toast.present();
             }
           }
         },
