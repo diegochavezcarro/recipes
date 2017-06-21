@@ -65,8 +65,14 @@ export class EditRecipePage {
         return { name: name, amount: 1 };
       });
     }
-    this.recipesService.addRecipe(value.title, value.description,
-      value.difficulty, ingredients);
+    if (this.mode=='Edit'){
+      this.recipesService.updateRecipes(this.index,value.title, 
+          value.description, value.difficulty, ingredients );
+    } else {
+      this.recipesService.addRecipe(value.title, value.description,
+          value.difficulty, ingredients);
+    }
+
     this.recipeForm.reset(); //esta de mas
     this.navCtrl.popToRoot();
   }
